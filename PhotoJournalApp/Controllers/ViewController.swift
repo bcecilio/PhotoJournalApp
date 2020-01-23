@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     private var imagePersistance = PersistenceHelper.init(filename: "images.plist")
     private var selectedImages : UIImage? {
         didSet {
-            
+            appendNewImagetoCollection()
         }
     }
     
@@ -27,6 +27,7 @@ class ViewController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         collectionView.dataSource = self
         collectionView.delegate = self
+        imagePickerController.delegate = self
         loadImages()
     }
     
@@ -102,7 +103,8 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
             fatalError("could not downcast ImageCollectionViewCell")
         }
         let cellImage = images[indexPath.row]
-        cell.configureCell(for: cellImage)
+        cell.configureCell(imageObject: cellImage)
+        cell.delegate = self
         cell.layer.cornerRadius = 7
         return cell
     }
@@ -111,6 +113,61 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         let maxWidth: CGFloat = UIScreen.main.bounds.size.width
         let itemWidth: CGFloat = maxWidth * 0.30
         return CGSize(width: itemWidth, height: itemWidth)
+    }
+}
+
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // we nee to access the UIImagePickerController.InfoKey.originalImage key to get the UIImage that was seclected
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            print("image selection not found")
+            return
+        }
+        selectedImages = image
+        dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+}
+
+extension ViewController: ImageCellDelegate {
+    func didLongPress(_ imageCell: ImageCollectionViewCell) {
+        guard let indexPath = collectionView.indexPath(for: imageCell) else {
+            return
+        }
+        // need to present an action sheet
+        
+        // action: delete, cancel
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) {
+            [weak self] alertAction in self?.deleteImageObject(indexPath: indexPath)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+    }
+    
+    private func deleteImageObject(indexPath: IndexPath) {
+        // delete image object from documents directory
+        imagePersistance.reorderImages(image: images)
+        do {
+            images = try imagePersistance.loadImages()
+        } catch {
+            print("loading error: \(error)")
+        }
+        // delete imageObject from imageObjects
+        images.remove(at: indexPath.row)
+        // delete cell from collectionView
+        collectionView.deleteItems(at: [indexPath])
+        
+        do {
+            try imagePersistance.delete(item: indexPath.row)
+        } catch {
+            print("error deleting item: \(error)")
+        }
     }
 }
 
