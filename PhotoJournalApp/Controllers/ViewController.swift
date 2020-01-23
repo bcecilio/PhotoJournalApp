@@ -27,6 +27,7 @@ class ViewController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         collectionView.dataSource = self
         collectionView.delegate = self
+        loadImages()
     }
     
     private func loadImages() {
@@ -45,6 +46,9 @@ class ViewController: UIViewController {
         let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) {
             [weak self] alertAction in self?.showImageController(isCameraSelected: false)
         }
+        let editAction = UIAlertAction(title: "Edit", style: .default) {
+            [weak self] alertAction in self?.showImageController(isCameraSelected: false)
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         if UIImagePickerController.isSourceTypeAvailable(.camera){
@@ -52,6 +56,30 @@ class ViewController: UIViewController {
         }
         alertController.addAction(photoLibraryAction)
         alertController.addAction(cancelAction)
+        alertController.addAction(editAction)
+    }
+    
+    private func appendNewImagetoCollection() {
+        guard let image = selectedImages else {
+            print("image is nil")
+            return
+        }
+        let size = UIScreen.main.bounds.size
+        let rect = AVMakeRect(aspectRatio: image.size, insideRect: CGRect(origin: CGPoint.zero, size: size))
+        let imageReSize = image.resizeImage(to: rect.size.width, height: rect.size.height)
+        
+        guard let resizeImageData = imageReSize.jpegData(compressionQuality: 1.0) else {
+            return
+        }
+        let imageObject = ImageObject(imageData: resizeImageData, date: Date())
+        images.insert(imageObject, at: 0)
+        let indexPath = IndexPath(row: 0, section: 0)
+        collectionView.insertItems(at: [indexPath])
+        do {
+            try imagePersistance.createItem(event: imageObject)
+        } catch {
+            print("saving error: \(error)")
+        }
     }
     
     private func showImageController(isCameraSelected: Bool) {
@@ -86,3 +114,12 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
     }
 }
 
+extension UIImage {
+    func resizeImage(to width: CGFloat, height: CGFloat) -> UIImage {
+        let size = CGSize(width: width, height: height)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { (context) in
+            self.draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
+}
