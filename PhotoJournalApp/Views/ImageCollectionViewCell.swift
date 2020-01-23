@@ -47,5 +47,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
             return
         }
         imageView.image = image
+        imageView.layer.cornerRadius = 7
     }
 }

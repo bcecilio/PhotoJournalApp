@@ -20,48 +20,54 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bDD-FM-fGP">
-                                    <size key="itemSize" width="276" height="275"/>
+                                    <size key="itemSize" width="276" height="387"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCell" id="agY-xt-2br" customClass="ImageCollectionViewCell" customModule="PhotoJournalApp" customModuleProvider="target">
-                                        <rect key="frame" x="69" y="0.0" width="276" height="275"/>
+                                        <rect key="frame" x="69" y="0.0" width="276" height="387"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="59H-vn-41Q">
-                                            <rect key="frame" x="0.0" y="0.0" width="276" height="275"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="276" height="387"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uDW-z7-vhW">
-                                                    <rect key="frame" x="8" y="8" width="260" height="144"/>
+                                                    <rect key="frame" x="8" y="8" width="260" height="202.5"/>
                                                 </imageView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mEe-lT-BQK">
-                                                    <rect key="frame" x="30" y="160" width="216" height="77"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mEe-lT-BQK">
+                                                    <rect key="frame" x="8" y="218.5" width="260" height="130.5"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                     <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3QI-Mt-MEx">
-                                                    <rect key="frame" x="221" y="240" width="30" height="27"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <state key="normal" title=". . .">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3QI-Mt-MEx">
+                                                    <rect key="frame" x="243" y="354" width="25" height="25"/>
+                                                    <state key="normal" image="icons8-menu_2">
                                                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="optionsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5gn-SY-wWw"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="uDW-z7-vhW" firstAttribute="height" secondItem="59H-vn-41Q" secondAttribute="height" multiplier="0.523636" id="4aA-wJ-eG9"/>
+                                                <constraint firstItem="mEe-lT-BQK" firstAttribute="leading" secondItem="59H-vn-41Q" secondAttribute="leading" constant="8" id="8Jb-gr-dQn"/>
+                                                <constraint firstItem="3QI-Mt-MEx" firstAttribute="top" secondItem="mEe-lT-BQK" secondAttribute="bottom" constant="5" id="GkU-Ol-lCx"/>
+                                                <constraint firstItem="mEe-lT-BQK" firstAttribute="top" secondItem="uDW-z7-vhW" secondAttribute="bottom" constant="8" id="LKy-wz-EDa"/>
+                                                <constraint firstAttribute="trailing" secondItem="3QI-Mt-MEx" secondAttribute="trailing" constant="8" id="Qxw-V6-ChE"/>
                                                 <constraint firstItem="uDW-z7-vhW" firstAttribute="leading" secondItem="59H-vn-41Q" secondAttribute="leading" constant="8" id="ady-xN-DdH"/>
                                                 <constraint firstItem="uDW-z7-vhW" firstAttribute="top" secondItem="59H-vn-41Q" secondAttribute="top" constant="8" id="agV-7g-XNG"/>
+                                                <constraint firstAttribute="trailing" secondItem="mEe-lT-BQK" secondAttribute="trailing" constant="8" id="qdP-6Q-XXm"/>
+                                                <constraint firstAttribute="bottom" secondItem="3QI-Mt-MEx" secondAttribute="bottom" constant="8" id="qyk-nQ-jJ2"/>
                                                 <constraint firstAttribute="trailing" secondItem="uDW-z7-vhW" secondAttribute="trailing" constant="8" id="yi3-qc-bAz"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="276" height="275"/>
+                                        <size key="customSize" width="276" height="387"/>
                                         <connections>
                                             <outlet property="imageView" destination="uDW-z7-vhW" id="n7R-G2-oth"/>
                                             <outlet property="textView" destination="mEe-lT-BQK" id="HH2-D0-1f4"/>
@@ -73,7 +79,7 @@
                                 <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="816-fn-ofV"/>
-                                    <barButtonItem image="plus.rectangle.fill" catalog="system" id="tmM-Ln-ctm">
+                                    <barButtonItem title="Item" image="plus" catalog="system" id="tmM-Ln-ctm">
                                         <connections>
                                             <action selector="addImageButtonPressed:" destination="BYZ-38-t0r" id="NoW-dO-DeF"/>
                                         </connections>
@@ -105,6 +111,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="plus.rectangle.fill" catalog="system" width="64" height="46"/>
+        <image name="icons8-menu_2" width="25" height="25"/>
+        <image name="plus" catalog="system" width="64" height="56"/>
     </resources>
 </document>

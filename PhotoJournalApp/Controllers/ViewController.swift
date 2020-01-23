@@ -29,8 +29,14 @@ class ViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         imagePickerController.delegate = self
+        doneButtonPressed()
         loadImages()
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(true)
+//        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+//    }
     
     private func loadImages() {
         do {
@@ -42,7 +48,7 @@ class ViewController: UIViewController {
     
     @IBAction func addImageButtonPressed(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let camerAction = UIAlertAction(title: "Camera", style: .default) {
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) {
             [weak self] alertAction in self?.showImageController(isCameraSelected: true)
         }
         let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) {
@@ -54,12 +60,22 @@ class ViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         if UIImagePickerController.isSourceTypeAvailable(.camera){
-            alertController.addAction(camerAction)
+            alertController.addAction(cameraAction)
         }
         alertController.addAction(photoLibraryAction)
         alertController.addAction(cancelAction)
-        alertController.addAction(editAction)
         present(alertController, animated: true)
+    }
+    
+    @IBAction func optionsButtonPressed(_ sender: UIButton) {
+        let optionsController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Delete", style: .default)
+        let editAction = UIAlertAction(title: "Edit", style: .default)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        optionsController.addAction(editAction)
+        optionsController.addAction(deleteAction)
+        optionsController.addAction(cancelAction)
+        present (optionsController, animated: true)
     }
     
     private func appendNewImagetoCollection() {
@@ -91,6 +107,17 @@ class ViewController: UIViewController {
             imagePickerController.sourceType = .camera
         }
         present(imagePickerController, animated: true)
+    }
+    
+    private func doneButtonPressed() {
+        let toolbar = UIToolbar()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.doneClicked))
+        
+        toolbar.setItems([doneButton], animated: true)
+    }
+    
+    @objc private func doneClicked() {
+        view.endEditing(true)
     }
 }
 
