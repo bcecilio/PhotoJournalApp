@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     private var images = [ImageObject]()
     private var imagePickerController = UIImagePickerController()
-    private var imagePersistance = PersistenceHelper.init(filename: "images.plist")
+    private var imagePersistance = PersistenceHelper(filename: "images.plist")
     private var selectedImages : UIImage? {
         didSet {
             appendNewImagetoCollection()
@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
+        collectionView.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         collectionView.dataSource = self
         collectionView.delegate = self
         imagePickerController.delegate = self
@@ -58,6 +59,7 @@ class ViewController: UIViewController {
         alertController.addAction(photoLibraryAction)
         alertController.addAction(cancelAction)
         alertController.addAction(editAction)
+        present(alertController, animated: true)
     }
     
     private func appendNewImagetoCollection() {
@@ -111,7 +113,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let maxWidth: CGFloat = UIScreen.main.bounds.size.width
-        let itemWidth: CGFloat = maxWidth * 0.30
+        let itemWidth: CGFloat = maxWidth * 0.90
         return CGSize(width: itemWidth, height: itemWidth)
     }
 }
