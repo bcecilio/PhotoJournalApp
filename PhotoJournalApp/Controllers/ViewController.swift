@@ -16,7 +16,6 @@ class ViewController: UIViewController {
     private var images = [ImageObject]()
     private var imagePickerController = UIImagePickerController()
     private var imagePersistance = PersistenceHelper.init(filename: "images.plist")
-    
     private var selectedImages : UIImage? {
         didSet {
             
@@ -28,6 +27,27 @@ class ViewController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         collectionView.dataSource = self
         collectionView.delegate = self
+    }
+    
+    private func loadImages() {
+        do {
+            images = try imagePersistance.loadImages()
+        } catch {
+            print("loading error: \(error)")
+        }
+    }
+    
+    @IBAction func addImageButtonPressed(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let camerAction = UIAlertAction(title: "Camera", style: .default)
+        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            alertController.addAction(camerAction)
+        }
+        alertController.addAction(photoLibraryAction)
+        alertController.addAction(cancelAction)
     }
 }
 
