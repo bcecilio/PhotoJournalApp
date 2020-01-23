@@ -39,8 +39,12 @@ class ViewController: UIViewController {
     
     @IBAction func addImageButtonPressed(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let camerAction = UIAlertAction(title: "Camera", style: .default)
-        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default)
+        let camerAction = UIAlertAction(title: "Camera", style: .default) {
+            [weak self] alertAction in self?.showImageController(isCameraSelected: true)
+        }
+        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) {
+            [weak self] alertAction in self?.showImageController(isCameraSelected: false)
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         if UIImagePickerController.isSourceTypeAvailable(.camera){
@@ -48,6 +52,14 @@ class ViewController: UIViewController {
         }
         alertController.addAction(photoLibraryAction)
         alertController.addAction(cancelAction)
+    }
+    
+    private func showImageController(isCameraSelected: Bool) {
+        imagePickerController.sourceType = .photoLibrary
+        if isCameraSelected {
+            imagePickerController.sourceType = .camera
+        }
+        present(imagePickerController, animated: true)
     }
 }
 
