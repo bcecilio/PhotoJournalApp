@@ -7,12 +7,21 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var images = [ImageObject]()
+    private var images = [ImageObject]()
+    private var imagePickerController = UIImagePickerController()
+    private var imagePersistance = PersistenceHelper.init(filename: "images.plist")
+    
+    private var selectedImages : UIImage? {
+        didSet {
+            
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
