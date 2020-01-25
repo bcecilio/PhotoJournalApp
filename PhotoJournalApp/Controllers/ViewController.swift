@@ -12,6 +12,8 @@ import AVFoundation
 class ViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var toolBar: UIView!
+    @IBOutlet weak var titleLabel: UILabel!
     
     private var images = [ImageObject]()
     private var imagePickerController = UIImagePickerController()
@@ -29,6 +31,7 @@ class ViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         imagePickerController.delegate = self
+//        toolBar.delete(UIContentContainer) = self
         doneButtonPressed()
         loadImages()
     }
@@ -141,7 +144,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let maxWidth: CGFloat = UIScreen.main.bounds.size.width
         let itemWidth: CGFloat = maxWidth * 0.90
-        return CGSize(width: itemWidth, height: itemWidth)
+        return CGSize(width: itemWidth, height: 450)
     }
 }
 
@@ -209,3 +212,12 @@ extension UIImage {
         }
     }
 }
+
+// TODO :- figure out height for tool bar 
+
+//extension ViewController: UIToolbarDelegate {
+//    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
+//        let size = CGSize(width: UIScreen.main.bounds.width, height: 100)
+//        return size
+//    }
+//}

@@ -15,7 +15,7 @@ protocol ImageCellDelegate: AnyObject {
 class ImageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var labelView: UILabel!
     
     weak var delegate: ImageCellDelegate?
     
@@ -48,5 +48,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
         }
         imageView.image = image
         imageView.layer.cornerRadius = 7
+        labelView.backgroundColor = .white
     }
 }
