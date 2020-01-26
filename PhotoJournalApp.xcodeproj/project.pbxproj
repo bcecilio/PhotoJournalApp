@@ -16,6 +16,7 @@
 		B70F1C6523DA26E5007DA303 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70F1C6423DA26E5007DA303 /* FileManager.swift */; };
 		B70F1C6723DA26F0007DA303 /* PersistanceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70F1C6623DA26F0007DA303 /* PersistanceHelper.swift */; };
 		B70F1C6923DA28EF007DA303 /* ImageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70F1C6823DA28EF007DA303 /* ImageObject.swift */; };
+		B710785623DE2DAB00D1A759 /* UploadPostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B710785523DE2DAB00D1A759 /* UploadPostController.swift */; };
 		B757225323DC07180067B902 /* AddPostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757225223DC07180067B902 /* AddPostController.swift */; };
 		B774BC4123DA2A2A00E74FA8 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774BC4023DA2A2A00E74FA8 /* ImageCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -32,6 +33,7 @@
 		B70F1C6423DA26E5007DA303 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		B70F1C6623DA26F0007DA303 /* PersistanceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceHelper.swift; sourceTree = "<group>"; };
 		B70F1C6823DA28EF007DA303 /* ImageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageObject.swift; sourceTree = "<group>"; };
+		B710785523DE2DAB00D1A759 /* UploadPostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostController.swift; sourceTree = "<group>"; };
 		B757225223DC07180067B902 /* AddPostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddPostController.swift; path = "../../../Scheduler 2/Scheduler/Controllers/AddPostController.swift"; sourceTree = "<group>"; };
 		B774BC4023DA2A2A00E74FA8 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				B70F1C3023D9F097007DA303 /* ViewController.swift */,
+				B710785523DE2DAB00D1A759 /* UploadPostController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 				B70F1C2F23D9F097007DA303 /* SceneDelegate.swift in Sources */,
 				B757225323DC07180067B902 /* AddPostController.swift in Sources */,
 				B70F1C6523DA26E5007DA303 /* FileManager.swift in Sources */,
+				B710785623DE2DAB00D1A759 /* UploadPostController.swift in Sources */,
 				B70F1C6723DA26F0007DA303 /* PersistanceHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

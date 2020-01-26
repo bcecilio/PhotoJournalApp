@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+protocol EditPostDelegate {
+    func editButtonPressed(_ imageView: ViewController)
+}
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -31,8 +35,6 @@ class ViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         imagePickerController.delegate = self
-//        toolBar.delete(UIContentContainer) = self
-        doneButtonPressed()
         loadImages()
     }
     
@@ -47,27 +49,6 @@ class ViewController: UIViewController {
         } catch {
             print("loading error: \(error)")
         }
-    }
-    
-    @IBAction func addImageButtonPressed(_ sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let cameraAction = UIAlertAction(title: "Camera", style: .default) {
-            [weak self] alertAction in self?.showImageController(isCameraSelected: true)
-        }
-        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) {
-            [weak self] alertAction in self?.showImageController(isCameraSelected: false)
-        }
-        let editAction = UIAlertAction(title: "Edit", style: .default) {
-            [weak self] alertAction in self?.showImageController(isCameraSelected: false)
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        if UIImagePickerController.isSourceTypeAvailable(.camera){
-            alertController.addAction(cameraAction)
-        }
-        alertController.addAction(photoLibraryAction)
-        alertController.addAction(cancelAction)
-        present(alertController, animated: true)
     }
     
     @IBAction func optionsButtonPressed(_ sender: UIButton) {
@@ -110,17 +91,6 @@ class ViewController: UIViewController {
             imagePickerController.sourceType = .camera
         }
         present(imagePickerController, animated: true)
-    }
-    
-    private func doneButtonPressed() {
-        let toolbar = UIToolbar()
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.doneClicked))
-        
-        toolbar.setItems([doneButton], animated: true)
-    }
-    
-    @objc private func doneClicked() {
-        view.endEditing(true)
     }
 }
 
@@ -212,12 +182,3 @@ extension UIImage {
         }
     }
 }
-
-// TODO :- figure out height for tool bar 
-
-//extension ViewController: UIToolbarDelegate {
-//    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
-//        let size = CGSize(width: UIScreen.main.bounds.width, height: 100)
-//        return size
-//    }
-//}

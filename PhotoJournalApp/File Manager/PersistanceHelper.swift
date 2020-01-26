@@ -28,16 +28,11 @@ class PersistenceHelper {
     }
     
     private func save() throws {
-        
         let url = FileManager.pathToDocumentsDirectory(with: filename)
-        
         do {
-            
             let data = try PropertyListEncoder().encode(images)
-            
             try data.write(to: url, options: .atomic)
         } catch {
-            
             throw DataPersistenceError.savingError(error)
         }
     }
