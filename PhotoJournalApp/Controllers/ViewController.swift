@@ -38,11 +38,6 @@ class ViewController: UIViewController {
         loadImages()
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(true)
-//        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
-//    }
-    
     private func loadImages() {
         do {
             images = try imagePersistance.loadImages()
@@ -92,6 +87,11 @@ class ViewController: UIViewController {
         }
         present(imagePickerController, animated: true)
     }
+    
+//    private func scale() {
+//        let image = selectedImages
+//        
+//    }
 }
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OvI-fE-HGR">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FOk-fw-liZ">
-                                <rect key="frame" x="0.0" y="93" width="414" height="720"/>
+                                <rect key="frame" x="0.0" y="137" width="414" height="676"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bDD-FM-fGP">
                                     <size key="itemSize" width="276" height="387"/>
@@ -79,16 +79,14 @@
                                     <barButtonItem title="Item" image="icons8-plus_math" id="tmM-Ln-ctm">
                                         <connections>
                                             <action selector="addImageButtonPressed:" destination="BYZ-38-t0r" id="NoW-dO-DeF"/>
-                                            <segue destination="6K0-Jp-Aea" kind="popoverPresentation" popoverAnchorBarButtonItem="tmM-Ln-ctm" id="ebg-IY-4iV">
-                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                            </segue>
+                                            <segue destination="6K0-Jp-Aea" kind="show" id="Ycz-TN-53l"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="L1N-K8-0PM"/>
                                 </items>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Journal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEX-Xf-cJc">
-                                <rect key="frame" x="0.0" y="44" width="414" height="41"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="41"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -109,6 +107,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="WKo-gF-I2o"/>
                     <connections>
                         <outlet property="collectionView" destination="FOk-fw-liZ" id="Cce-56-z2Z"/>
                         <outlet property="titleLabel" destination="GEX-Xf-cJc" id="sXV-ez-rW9"/>
@@ -117,18 +116,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="129.91071428571428"/>
+            <point key="canvasLocation" x="1047.8260869565217" y="129.91071428571428"/>
         </scene>
         <!--Upload Post Controller-->
         <scene sceneID="r2p-1K-2oK">
             <objects>
                 <viewController storyboardIdentifier="UploadPostController" id="6K0-Jp-Aea" customClass="UploadPostController" customModule="PhotoJournalApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ycl-AX-s70">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b5I-PR-VzU">
-                                <rect key="frame" x="0.0" y="759" width="414" height="49"/>
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="edl-Qa-fcN"/>
                                     <barButtonItem title="Item" image="icons8-upload" id="R8C-kq-Re8">
@@ -146,36 +145,40 @@
                                 </items>
                             </toolbar>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="pQl-Zs-PQp">
-                                <rect key="frame" x="0.0" y="1" width="414" height="359"/>
+                                <rect key="frame" x="0.0" y="89" width="414" height="248"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="361.5" id="zJV-Xs-hY9"/>
+                                    <constraint firstAttribute="height" constant="250.5" id="EuT-g6-lz7"/>
                                 </constraints>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="VTQ-Tx-y4G">
-                                <rect key="frame" x="20" y="369.5" width="374" height="188"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="VTQ-Tx-y4G">
+                                <rect key="frame" x="20" y="346.5" width="374" height="130"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="188" id="OG4-Kv-SsW"/>
+                                    <constraint firstAttribute="height" constant="130" id="iFn-T9-Rbi"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" enablesReturnKeyAutomatically="YES"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="pQl-Zs-PQp" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" id="1aL-Fn-bcJ"/>
+                            <constraint firstItem="pQl-Zs-PQp" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" id="2vM-v3-IV2"/>
                             <constraint firstItem="b5I-PR-VzU" firstAttribute="bottom" secondItem="6xu-He-LQN" secondAttribute="bottom" id="3ap-GU-uZE"/>
+                            <constraint firstItem="b5I-PR-VzU" firstAttribute="trailing" secondItem="6xu-He-LQN" secondAttribute="trailing" id="7qR-oL-FJw"/>
+                            <constraint firstItem="6xu-He-LQN" firstAttribute="trailing" secondItem="VTQ-Tx-y4G" secondAttribute="trailing" constant="20" id="CQs-56-hT2"/>
+                            <constraint firstItem="b5I-PR-VzU" firstAttribute="bottom" secondItem="6xu-He-LQN" secondAttribute="bottom" id="I7C-6K-hsA"/>
+                            <constraint firstItem="VTQ-Tx-y4G" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" constant="20" id="Ml8-rr-fvO"/>
                             <constraint firstItem="b5I-PR-VzU" firstAttribute="trailing" secondItem="6xu-He-LQN" secondAttribute="trailing" id="OdT-fA-Sdh"/>
-                            <constraint firstItem="6xu-He-LQN" firstAttribute="trailing" secondItem="VTQ-Tx-y4G" secondAttribute="trailing" constant="20" id="Wh2-Qc-jvk"/>
-                            <constraint firstItem="pQl-Zs-PQp" firstAttribute="trailing" secondItem="6xu-He-LQN" secondAttribute="trailing" id="cjq-7G-cOV"/>
-                            <constraint firstItem="VTQ-Tx-y4G" firstAttribute="top" secondItem="pQl-Zs-PQp" secondAttribute="bottom" constant="8" id="d9c-nd-m8I"/>
-                            <constraint firstItem="VTQ-Tx-y4G" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" constant="20" id="tkL-YB-SGM"/>
-                            <constraint firstItem="pQl-Zs-PQp" firstAttribute="top" secondItem="6xu-He-LQN" secondAttribute="top" id="ydn-MH-8JO"/>
+                            <constraint firstItem="pQl-Zs-PQp" firstAttribute="top" secondItem="6xu-He-LQN" secondAttribute="top" id="QR1-K9-esb"/>
+                            <constraint firstItem="b5I-PR-VzU" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" id="SW9-Ml-aks"/>
+                            <constraint firstItem="pQl-Zs-PQp" firstAttribute="trailing" secondItem="6xu-He-LQN" secondAttribute="trailing" id="hrz-yf-Dzn"/>
+                            <constraint firstItem="VTQ-Tx-y4G" firstAttribute="top" secondItem="pQl-Zs-PQp" secondAttribute="bottom" constant="8" id="nuB-z9-iWy"/>
                             <constraint firstItem="b5I-PR-VzU" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" id="ygb-C4-rqi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6xu-He-LQN"/>
                     </view>
+                    <navigationItem key="navigationItem" id="vuN-d3-CsM"/>
                     <connections>
                         <outlet property="imageView" destination="pQl-Zs-PQp" id="Lwx-rn-QH2"/>
                         <outlet property="textView" destination="VTQ-Tx-y4G" id="zj0-Hg-fXV"/>
@@ -183,7 +186,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e0B-An-jaS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="924.63768115942037" y="129.91071428571428"/>
+            <point key="canvasLocation" x="1834.7826086956522" y="129.91071428571428"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="mnq-C0-zeM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OvI-fE-HGR" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4gk-Br-TRi">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ABz-1p-sum"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DrH-Sb-6oG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="129.91071428571428"/>
         </scene>
     </scenes>
     <resources>
