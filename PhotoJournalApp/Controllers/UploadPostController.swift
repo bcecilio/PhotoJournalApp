@@ -57,12 +57,20 @@ class UploadPostController: UIViewController {
         
         let rect = AVMakeRect(aspectRatio: photo.size, insideRect: CGRect(origin: CGPoint.zero, size: size))
         
-        guard let resized = photo.jpegData(compressionQuality: 1.0) else {
+        let imageReSize = photo.resizeImage(to: rect.size.width, height: rect.size.height)
+        
+        guard let resized = imageReSize.jpegData(compressionQuality: 1.0) else {
             return
         }
         
         images = ImageObject(imageData: resized, date: Date(), description: textView.text!)
         delegate?.uploadedPost(images!)
+        
+        do {
+            try? imagePersistance.createItem(event: images!)
+        } catch {
+            print("saving error: \(error)")
+        }
         dismiss(animated: true)
     }
     
