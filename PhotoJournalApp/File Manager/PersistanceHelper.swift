@@ -32,6 +32,7 @@ class PersistenceHelper {
         do {
             let data = try PropertyListEncoder().encode(images)
             try data.write(to: url, options: .atomic)
+            print(url)
         } catch {
             throw DataPersistenceError.savingError(error)
         }

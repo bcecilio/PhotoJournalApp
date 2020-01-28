@@ -19,14 +19,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var toolBar: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    private var images = [ImageObject]()
-    private var imagePickerController = UIImagePickerController()
-    private var imagePersistance = PersistenceHelper(filename: "images.plist")
-    private var selectedImages : UIImage? {
-        didSet {
-            appendNewImagetoCollection()
+    private var images = [ImageObject](){
+        didSet{
+            self.collectionView.reloadData()
         }
     }
+    private var imagePickerController = UIImagePickerController()
+    private var imagePersistance = PersistenceHelper(filename: "images.plist")
+    private var selectedImages : UIImage? 
+    private var newText : String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,27 +58,16 @@ class ViewController: UIViewController {
         present (optionsController, animated: true)
     }
     
-    private func appendNewImagetoCollection() {
-        guard let image = selectedImages else {
-            print("image is nil")
+    @IBAction func addImageToCollection() {
+        addImage()
+    }
+    
+    private func addImage() {
+        guard let addImageVC = storyboard?.instantiateViewController(identifier: "UploadPostController") as? UploadPostController else {
             return
         }
-        let size = UIScreen.main.bounds.size
-        let rect = AVMakeRect(aspectRatio: image.size, insideRect: CGRect(origin: CGPoint.zero, size: size))
-        let imageReSize = image.resizeImage(to: rect.size.width, height: rect.size.height)
-        
-        guard let resizeImageData = imageReSize.jpegData(compressionQuality: 1.0) else {
-            return
-        }
-        let imageObject = ImageObject(imageData: resizeImageData, date: Date())
-        images.insert(imageObject, at: 0)
-        let indexPath = IndexPath(row: 0, section: 0)
-        collectionView.insertItems(at: [indexPath])
-        do {
-            try imagePersistance.createItem(event: imageObject)
-        } catch {
-            print("saving error: \(error)")
-        }
+        addImageVC.delegate = self
+        present(addImageVC, animated: true)
     }
     
     private func showImageController(isCameraSelected: Bool) {
@@ -87,11 +77,6 @@ class ViewController: UIViewController {
         }
         present(imagePickerController, animated: true)
     }
-    
-//    private func scale() {
-//        let image = selectedImages
-//        
-//    }
 }
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -106,7 +91,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         }
         let cellImage = images[indexPath.row]
         cell.configureCell(imageObject: cellImage)
-        cell.delegate = self
         cell.layer.cornerRadius = 7
         return cell
     }
@@ -170,6 +154,13 @@ extension ViewController: ImageCellDelegate {
         } catch {
             print("error deleting item: \(error)")
         }
+    }
+}
+
+extension ViewController: UploadImageDelegate {
+    
+    func uploadedPost(_ imageView: ImageObject) {
+        self.images.append(imageView)
     }
 }
 

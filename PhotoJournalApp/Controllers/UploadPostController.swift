@@ -9,8 +9,8 @@
 import UIKit
 import AVFoundation
 
-protocol UploadImageDelegate {
-    func didLongPress(_ imageView: UploadPostController)
+protocol UploadImageDelegate: AnyObject {
+    func uploadedPost(_ imageView: ImageObject)
 }
 
 class UploadPostController: UIViewController {
@@ -18,10 +18,13 @@ class UploadPostController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
     
+    weak var delegate: UploadImageDelegate?
     private var imagePickerController = UIImagePickerController()
     private var imagePersistance = PersistenceHelper(filename: "images.plist")
-    private var images = [ImageObject]()
-    private var selectedImage: UIImage?
+    private var images: ImageObject?
+    public var selectedImage: UIImage?
+    public var postText: String = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +34,6 @@ class UploadPostController: UIViewController {
         textView.textColor = UIColor.lightGray
         textView.delegate = self
         textView.layer.cornerRadius = 7
-        loadImageObjects()
     }
     
     @IBAction func cameraButtonPressed(_ sender: UIBarButtonItem) {
@@ -42,12 +44,26 @@ class UploadPostController: UIViewController {
         showImageController(isCameraSelected: false)
     }
     
-    private func loadImageObjects() {
-        do {
-            images = try imagePersistance.loadImages()
-        } catch {
-            print("loading objects error: \(error)")
+    @IBAction func uploadButtonPressed(_ sender: UIBarButtonItem) {
+        uploadImage()
+    }
+    
+    private func uploadImage() {
+        guard let photo = imageView.image else {
+            return
         }
+        
+        let size = UIScreen.main.bounds.size
+        
+        let rect = AVMakeRect(aspectRatio: photo.size, insideRect: CGRect(origin: CGPoint.zero, size: size))
+        
+        guard let resized = photo.jpegData(compressionQuality: 1.0) else {
+            return
+        }
+        
+        images = ImageObject(imageData: resized, date: Date(), description: textView.text!)
+        delegate?.uploadedPost(images!)
+        dismiss(animated: true)
     }
     
     private func showImageController(isCameraSelected: Bool) {
@@ -77,9 +93,7 @@ extension UploadPostController: UITextViewDelegate {
         // create the updated text string
         let currentText:String = textView.text
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
-
-        // If updated text view will be empty, add the placeholder
-        // and set the cursor to the beginning of the text view
+        
         if updatedText.isEmpty {
 
             textView.text = "Add text to your Post!"
@@ -87,24 +101,13 @@ extension UploadPostController: UITextViewDelegate {
 
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
         }
-
-        // Else if the text view's placeholder is showing and the
-        // length of the replacement string is greater than 0, set
-        // the text color to black then set its text to the
-        // replacement string
          else if textView.textColor == UIColor.lightGray && !text.isEmpty {
             textView.textColor = UIColor.black
             textView.text = text
         }
-
-        // For every other case, the text should change with the usual
-        // behavior...
         else {
             return true
         }
-
-        // ...otherwise return false since the updates have already
-        // been made
         return false
     }
     

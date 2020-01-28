@@ -11,7 +11,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PhotoJournalApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="PhotoJournalApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -78,8 +78,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="816-fn-ofV"/>
                                     <barButtonItem title="Item" image="icons8-plus_math" id="tmM-Ln-ctm">
                                         <connections>
-                                            <action selector="addImageButtonPressed:" destination="BYZ-38-t0r" id="NoW-dO-DeF"/>
-                                            <segue destination="6K0-Jp-Aea" kind="show" id="Ycz-TN-53l"/>
+                                            <action selector="addImageToCollection" destination="BYZ-38-t0r" id="Te5-pT-L21"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="L1N-K8-0PM"/>
@@ -144,18 +143,26 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="wQa-I1-OuJ"/>
                                 </items>
                             </toolbar>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="pQl-Zs-PQp">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pxq-Dw-t5D">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="FBd-1h-3Lc"/>
+                                    <barButtonItem title="Upload" id="H2D-cB-1SD">
+                                        <connections>
+                                            <action selector="uploadButtonPressed:" destination="6K0-Jp-Aea" id="h7i-jW-sxM"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="pQl-Zs-PQp">
                                 <rect key="frame" x="0.0" y="89" width="414" height="248"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="250.5" id="EuT-g6-lz7"/>
+                                    <constraint firstAttribute="height" constant="250.5" id="j5G-2E-f3K"/>
                                 </constraints>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="VTQ-Tx-y4G">
                                 <rect key="frame" x="20" y="346.5" width="374" height="130"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="130" id="iFn-T9-Rbi"/>
-                                </constraints>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" enablesReturnKeyAutomatically="YES"/>
@@ -163,22 +170,32 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="pQl-Zs-PQp" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" id="2vM-v3-IV2"/>
+                            <constraint firstItem="pQl-Zs-PQp" firstAttribute="trailing" secondItem="6xu-He-LQN" secondAttribute="trailing" id="3RV-QD-wvj"/>
                             <constraint firstItem="b5I-PR-VzU" firstAttribute="bottom" secondItem="6xu-He-LQN" secondAttribute="bottom" id="3ap-GU-uZE"/>
                             <constraint firstItem="b5I-PR-VzU" firstAttribute="trailing" secondItem="6xu-He-LQN" secondAttribute="trailing" id="7qR-oL-FJw"/>
-                            <constraint firstItem="6xu-He-LQN" firstAttribute="trailing" secondItem="VTQ-Tx-y4G" secondAttribute="trailing" constant="20" id="CQs-56-hT2"/>
+                            <constraint firstItem="pxq-Dw-t5D" firstAttribute="trailing" secondItem="6xu-He-LQN" secondAttribute="trailing" id="Bqi-Kg-qeJ"/>
                             <constraint firstItem="b5I-PR-VzU" firstAttribute="bottom" secondItem="6xu-He-LQN" secondAttribute="bottom" id="I7C-6K-hsA"/>
-                            <constraint firstItem="VTQ-Tx-y4G" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" constant="20" id="Ml8-rr-fvO"/>
                             <constraint firstItem="b5I-PR-VzU" firstAttribute="trailing" secondItem="6xu-He-LQN" secondAttribute="trailing" id="OdT-fA-Sdh"/>
-                            <constraint firstItem="pQl-Zs-PQp" firstAttribute="top" secondItem="6xu-He-LQN" secondAttribute="top" id="QR1-K9-esb"/>
+                            <constraint firstItem="pxq-Dw-t5D" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" id="P08-33-rJC"/>
                             <constraint firstItem="b5I-PR-VzU" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" id="SW9-Ml-aks"/>
-                            <constraint firstItem="pQl-Zs-PQp" firstAttribute="trailing" secondItem="6xu-He-LQN" secondAttribute="trailing" id="hrz-yf-Dzn"/>
-                            <constraint firstItem="VTQ-Tx-y4G" firstAttribute="top" secondItem="pQl-Zs-PQp" secondAttribute="bottom" constant="8" id="nuB-z9-iWy"/>
+                            <constraint firstItem="pQl-Zs-PQp" firstAttribute="top" secondItem="pxq-Dw-t5D" secondAttribute="bottom" id="XRf-OF-62N"/>
+                            <constraint firstItem="VTQ-Tx-y4G" firstAttribute="height" secondItem="Ycl-AX-s70" secondAttribute="height" multiplier="0.145089" id="gQN-NB-6a0"/>
+                            <constraint firstItem="pxq-Dw-t5D" firstAttribute="top" secondItem="6xu-He-LQN" secondAttribute="top" id="hbn-RM-ytt"/>
+                            <constraint firstItem="6xu-He-LQN" firstAttribute="trailing" secondItem="VTQ-Tx-y4G" secondAttribute="trailing" constant="20" id="pUo-zB-k4c"/>
+                            <constraint firstItem="VTQ-Tx-y4G" firstAttribute="top" secondItem="pQl-Zs-PQp" secondAttribute="bottom" constant="8" id="s9Z-SI-Ax9"/>
+                            <constraint firstItem="VTQ-Tx-y4G" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" constant="20" id="vKX-pd-EvT"/>
+                            <constraint firstItem="pQl-Zs-PQp" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" id="y6l-FD-ph1"/>
                             <constraint firstItem="b5I-PR-VzU" firstAttribute="leading" secondItem="6xu-He-LQN" secondAttribute="leading" id="ygb-C4-rqi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6xu-He-LQN"/>
                     </view>
-                    <navigationItem key="navigationItem" id="vuN-d3-CsM"/>
+                    <navigationItem key="navigationItem" id="vuN-d3-CsM">
+                        <barButtonItem key="rightBarButtonItem" title="Upload" id="nBR-QC-Qsp">
+                            <connections>
+                                <action selector="uploadButtonPressed:" destination="6K0-Jp-Aea" id="2lO-Xj-6Bb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="pQl-Zs-PQp" id="Lwx-rn-QH2"/>
                         <outlet property="textView" destination="VTQ-Tx-y4G" id="zj0-Hg-fXV"/>
