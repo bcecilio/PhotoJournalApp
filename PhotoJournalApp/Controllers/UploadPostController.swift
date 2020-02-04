@@ -21,7 +21,7 @@ class UploadPostController: UIViewController {
     weak var delegate: UploadImageDelegate?
     private var imagePickerController = UIImagePickerController()
     private var imagePersistance = PersistenceHelper(filename: "images.plist")
-    private var images: ImageObject?
+    public var images: ImageObject?
     public var selectedImage: UIImage?
     public var postText: String = ""
     
@@ -65,7 +65,6 @@ class UploadPostController: UIViewController {
         
         images = ImageObject(imageData: resized, date: Date(), description: textView.text!)
         delegate?.uploadedPost(images!)
-        
         do {
             try? imagePersistance.createItem(event: images!)
         } catch {

@@ -9,10 +9,6 @@
 import UIKit
 import AVFoundation
 
-protocol EditPostDelegate {
-    func editButtonPressed(_ imageView: ViewController)
-}
-
 class ViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -48,6 +44,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func optionsButtonPressed(_ sender: UIButton) {
+        
         let optionsController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "Delete", style: .default)
         let editAction = UIAlertAction(title: "Edit", style: .default)
@@ -77,6 +74,17 @@ class ViewController: UIViewController {
         }
         present(imagePickerController, animated: true)
     }
+    
+//    private func appendToCollection() {
+//        // create an ImageObject using the image selected
+//        let imageObject = ImageObject(imageData: resizeImageData, date: Date())
+//        // append(insert) new ImageObject into ImageObjects
+//        imageObjects.insert(imageObject, at: 0)
+//        // create an indexPath for insertion into collectionView
+//        let indexPath = IndexPath(row: 0, section: 0)
+//        // insert new cell in to collectionView
+//        collectionView.insertItems(at: [indexPath])
+//    }
 }
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -123,14 +131,14 @@ extension ViewController: ImageCellDelegate {
         guard let indexPath = collectionView.indexPath(for: imageCell) else {
             return
         }
-        // need to present an action sheet
-        
-        // action: delete, cancel
+        // action: edit, delete, cancel
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let editAction = UIAlertAction(title: "Edit", style: .default)
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) {
             [weak self] alertAction in self?.deleteImageObject(indexPath: indexPath)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(editAction)
         alertController.addAction(deleteAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true)
