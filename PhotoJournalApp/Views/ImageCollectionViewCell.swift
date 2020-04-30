@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ImageCellDelegate: AnyObject {
-    func didLongPress(_ imageCell: ImageCollectionViewCell)
+    func alert(_ imageCell: ImageCollectionViewCell)
 }
 
 class ImageCollectionViewCell: UICollectionViewCell {
@@ -19,26 +19,10 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: ImageCellDelegate?
     
-    private lazy var longPressGesture: UILongPressGestureRecognizer = {
-        let gesture = UILongPressGestureRecognizer()
-        gesture.addTarget(self, action: #selector(longPressedAction(gesture:)))
-        return gesture
-    }()
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = 20.0
         backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        addGestureRecognizer(longPressGesture)
-    }
-    
-    @objc private func longPressedAction(gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .began {
-            gesture.state = .cancelled
-            return
-        }
-        // step 3. creating custom delegate - explicitly use delegate object to notify
-        delegate?.didLongPress(self)
     }
     
     public func configureCell(imageObject: ImageObject) {
@@ -51,4 +35,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
         labelView.text = imageObject.description
         labelView.backgroundColor = .white
     }
+    
+    @IBAction func editButtonPressed(_ sender: UIButton) {
+        delegate?.alert(self)
+    }
+    
 }

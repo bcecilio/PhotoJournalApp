@@ -9,8 +9,13 @@
 import UIKit
 import AVFoundation
 
+enum State {
+    case editing
+    case saving
+}
+
 protocol UploadImageDelegate: AnyObject {
-    func uploadedPost(_ imageView: ImageObject)
+    func uploadedPost(_ imageView: ImageObject, _ viewController: UploadPostController)
 }
 
 class UploadPostController: UIViewController {
@@ -22,6 +27,7 @@ class UploadPostController: UIViewController {
     private var imagePickerController = UIImagePickerController()
     private var imagePersistance = PersistenceHelper(filename: "images.plist")
     public var images: ImageObject?
+    public var state = State.editing
     public var selectedImage: UIImage? {
         didSet {
             
@@ -68,7 +74,7 @@ class UploadPostController: UIViewController {
         }
         
         images = ImageObject(imageData: resized, date: Date(), description: textView.text!)
-        delegate?.uploadedPost(images!)
+        delegate?.uploadedPost(images!, self)
         do {
             try? imagePersistance.createItem(event: images!)
             

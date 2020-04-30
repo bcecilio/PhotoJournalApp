@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OvI-fE-HGR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OvI-fE-HGR">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -36,32 +36,30 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uDW-z7-vhW">
                                                     <rect key="frame" x="0.0" y="0.0" width="276" height="279"/>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3QI-Mt-MEx">
-                                                    <rect key="frame" x="243" y="354" width="25" height="25"/>
-                                                    <state key="normal" image="icons8-menu_2">
-                                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="optionsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5gn-SY-wWw"/>
-                                                    </connections>
-                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPX-qw-pkW">
                                                     <rect key="frame" x="8" y="287" width="260" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdY-Ml-nJe">
+                                                    <rect key="frame" x="233" y="352" width="25" height="25"/>
+                                                    <state key="normal" image="icons8-menu_2"/>
+                                                    <connections>
+                                                        <action selector="editButtonPressed:" destination="agY-xt-2br" eventType="touchUpInside" id="93M-xA-RJQ"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="GPX-qw-pkW" firstAttribute="leading" secondItem="59H-vn-41Q" secondAttribute="leading" constant="8" id="0V1-Zc-f5w"/>
                                                 <constraint firstAttribute="trailing" secondItem="uDW-z7-vhW" secondAttribute="trailing" id="6eW-iH-3Mm"/>
+                                                <constraint firstAttribute="bottom" secondItem="wdY-Ml-nJe" secondAttribute="bottom" constant="10" id="9sk-R7-M7N"/>
                                                 <constraint firstItem="uDW-z7-vhW" firstAttribute="top" secondItem="59H-vn-41Q" secondAttribute="top" id="J27-7h-xU5"/>
-                                                <constraint firstAttribute="trailing" secondItem="3QI-Mt-MEx" secondAttribute="trailing" constant="8" id="Qxw-V6-ChE"/>
                                                 <constraint firstItem="uDW-z7-vhW" firstAttribute="height" secondItem="59H-vn-41Q" secondAttribute="height" multiplier="0.72093" id="YmQ-Oh-xKJ"/>
                                                 <constraint firstItem="GPX-qw-pkW" firstAttribute="top" secondItem="uDW-z7-vhW" secondAttribute="bottom" constant="8" id="nXG-KX-deb"/>
-                                                <constraint firstAttribute="bottom" secondItem="3QI-Mt-MEx" secondAttribute="bottom" constant="8" id="qyk-nQ-jJ2"/>
                                                 <constraint firstAttribute="trailing" secondItem="GPX-qw-pkW" secondAttribute="trailing" constant="8" id="r99-VE-iMw"/>
                                                 <constraint firstItem="uDW-z7-vhW" firstAttribute="leading" secondItem="59H-vn-41Q" secondAttribute="leading" id="rey-PU-5yy"/>
+                                                <constraint firstAttribute="trailing" secondItem="wdY-Ml-nJe" secondAttribute="trailing" constant="18" id="zBr-7v-NMQ"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="276" height="387"/>
@@ -229,6 +227,6 @@
         <image name="icons8-plus_math" width="25" height="25"/>
         <image name="icons8-slr_camera" width="25" height="25"/>
         <image name="icons8-upload" width="25" height="25"/>
-        <image name="photo" catalog="system" width="64" height="46"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
     </resources>
 </document>

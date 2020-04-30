@@ -47,17 +47,26 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func optionsButtonPressed(_ sender: UIButton) {
-        
-        let optionsController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive)
-        let editAction = UIAlertAction(title: "Edit", style: .default)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        optionsController.addAction(editAction)
-        optionsController.addAction(deleteAction)
-        optionsController.addAction(cancelAction)
-        present (optionsController, animated: true)
-    }
+//    @IBAction func optionsButtonPressed(_ sender: UIButton) {
+//        let optionsController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) {
+//            [weak self] alertAction in self?.delete(indexPath: IndexPath)
+//        }
+//        let editAction = UIAlertAction(title: "Edit", style: .default)
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+//        optionsController.addAction(editAction)
+//        optionsController.addAction(deleteAction)
+//        optionsController.addAction(cancelAction)
+//        present (optionsController, animated: true)
+//    }
+//    
+//    private func delete(indexPath: IndexPath) {
+//        do {
+//            try imagePersistance.delete(item: indexPath.row)
+//        } catch {
+//            print("no delete")
+//        }
+//    }
     
     @IBAction func addImageToCollection() {
         addImage()
@@ -106,6 +115,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
             fatalError("could not downcast ImageCollectionViewCell")
         }
         let cellImage = images[indexPath.row]
+        cell.delegate = self
         cell.configureCell(imageObject: cellImage)
         cell.layer.cornerRadius = 7
         return cell
@@ -135,13 +145,27 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
 }
 
 extension ViewController: ImageCellDelegate {
-    func didLongPress(_ imageCell: ImageCollectionViewCell) {
+    func alert(_ imageCell: ImageCollectionViewCell) {
         guard let indexPath = collectionView.indexPath(for: imageCell) else {
             return
         }
         // action: edit, delete, cancel
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let editAction = UIAlertAction(title: "Edit", style: .default)
+        let editAction = UIAlertAction(title: "Edit", style: .default) {
+            [weak self] (alertAction) in
+            guard let editVC = self?.storyboard?.instantiateViewController(identifier: "UploadPostController") as? UploadPostController, let newItem = editVC.images else {
+                fatalError("could not instantiate VC")
+            }
+            let selectedCell = self?.images[indexPath.row]
+            editVC.images = selectedCell
+            if editVC.state == .editing {
+                let index = self?.images.firstIndex{$0.identifier == newItem.identifier}
+                guard let itemIndex = index else {return}
+                let oldItem = self?.images[itemIndex]
+                
+            }
+            self?.present(editVC, animated: true)
+        }
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) {
             [weak self] alertAction in self?.deleteImageObject(indexPath: indexPath)
         }
@@ -154,19 +178,20 @@ extension ViewController: ImageCellDelegate {
     
     private func deleteImageObject(indexPath: IndexPath) {
         // delete image object from documents directory
-        imagePersistance.reorderImages(image: images)
-        do {
-            images = try imagePersistance.loadImages()
-        } catch {
-            print("loading error: \(error)")
-        }
-        // delete imageObject from imageObjects
-        images.remove(at: indexPath.row)
-        // delete cell from collectionView
-        collectionView.deleteItems(at: [indexPath])
+//        imagePersistance.reorderImages(image: images)
+//        do {
+//            images = try imagePersistance.loadImages()
+//        } catch {
+//            print("loading error: \(error)")
+//        }
+//        // delete imageObject from imageObjects
+//        images.remove(at: indexPath.row)
+//        // delete cell from collectionView
+//        collectionView.deleteItems(at: [indexPath])
         
         do {
             try imagePersistance.delete(item: indexPath.row)
+            images.remove(at: indexPath.row)
         } catch {
             print("error deleting item: \(error)")
         }
@@ -174,8 +199,7 @@ extension ViewController: ImageCellDelegate {
 }
 
 extension ViewController: UploadImageDelegate {
-    
-    func uploadedPost(_ imageView: ImageObject) {
+    func uploadedPost(_ imageView: ImageObject, _ viewController: UploadPostController) {
         self.images.append(imageView)
     }
 }
