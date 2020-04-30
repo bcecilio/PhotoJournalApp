@@ -22,11 +22,11 @@ class ViewController: UIViewController {
     }
     private var imagePickerController = UIImagePickerController()
     private var imagePersistance = PersistenceHelper(filename: "images.plist")
-//    private var selectedImages : UIImage? {
-//        didSet {
+    private var selectedImages : UIImage? {
+        didSet {
 //            appendToCollection()
-//        }
-//    }
+        }
+    }
 //    private var newText : String = ""
     
     override func viewDidLoad() {

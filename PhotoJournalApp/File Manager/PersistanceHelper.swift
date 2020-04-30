@@ -38,6 +38,23 @@ class PersistenceHelper {
         }
     }
     
+    private func update(_ oldItem: ImageObject, newItem: ImageObject) -> Bool {
+    if let index = images.firstIndex(of: oldItem) {
+        let result = update(newItem, index)
+        return result
+    }
+        return false
+    }
+    
+    private func update(_ item: ImageObject, _ index: Int) -> Bool {
+        images[index] = item
+        do {
+            try save()
+            return true
+        } catch {
+            return false
+        }
+    }
     
     public func reorderImages(image: [ImageObject]) {
         self.images = image
