@@ -22,8 +22,12 @@ class UploadPostController: UIViewController {
     private var imagePickerController = UIImagePickerController()
     private var imagePersistance = PersistenceHelper(filename: "images.plist")
     public var images: ImageObject?
-    public var selectedImage: UIImage?
-    public var postText: String = ""
+    public var selectedImage: UIImage? {
+        didSet {
+            
+        }
+    }
+//    public var postText: String = ""
     
     
     override func viewDidLoad() {
@@ -67,6 +71,7 @@ class UploadPostController: UIViewController {
         delegate?.uploadedPost(images!)
         do {
             try? imagePersistance.createItem(event: images!)
+            
         } catch {
             print("saving error: \(error)")
         }

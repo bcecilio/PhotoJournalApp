@@ -15,19 +15,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var toolBar: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    private var images = [ImageObject](){
+    public var images = [ImageObject](){
         didSet{
             self.collectionView.reloadData()
         }
     }
     private var imagePickerController = UIImagePickerController()
     private var imagePersistance = PersistenceHelper(filename: "images.plist")
-    private var selectedImages : UIImage? {
-        didSet {
-            appendToCollection()
-        }
-    }
-    private var newText : String = ""
+//    private var selectedImages : UIImage? {
+//        didSet {
+//            appendToCollection()
+//        }
+//    }
+//    private var newText : String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,20 +79,20 @@ class ViewController: UIViewController {
         present(imagePickerController, animated: true)
     }
     
-    private func appendToCollection() {
-        guard let image = selectedImages, let imageData = image.jpegData(compressionQuality: 1.0) else {
-            print("image is nil")
-            return
-        }
-        // create an ImageObject using the image selected
-        let imageObject = ImageObject(imageData: imageData, date: Date(), description: images.first?.description ?? "no caption")
-        // append(insert) new ImageObject into ImageObjects
-        images.insert(imageObject, at: 0)
-        // create an indexPath for insertion into collectionView
-        let indexPath = IndexPath(row: 0, section: 0)
-        // insert new cell in to collectionView
-        collectionView.insertItems(at: [indexPath])
-    }
+//    private func appendToCollection() {
+//           guard let image = selectedImages, let imageData = image.jpegData(compressionQuality: 1.0) else {
+//               print("image is nil")
+//               return
+//           }
+//           // create an ImageObject using the image selected
+//           let imageObject = ImageObject(imageData: imageData, date: Date(), description: images.first?.description ?? "no caption")
+//           // append(insert) new ImageObject into ImageObjects
+//           images.insert(imageObject, at: 0)
+//           // create an indexPath for insertion into collectionView
+//           let indexPath = IndexPath(row: 0, section: 0)
+//           // insert new cell in to collectionView
+//           collectionView.insertItems(at: [indexPath])
+//       }
 }
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
