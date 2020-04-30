@@ -48,6 +48,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
         }
         imageView.image = image
         imageView.layer.cornerRadius = 7
+        labelView.text = imageObject.description
         labelView.backgroundColor = .white
     }
 }

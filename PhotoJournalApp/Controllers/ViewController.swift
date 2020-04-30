@@ -22,7 +22,11 @@ class ViewController: UIViewController {
     }
     private var imagePickerController = UIImagePickerController()
     private var imagePersistance = PersistenceHelper(filename: "images.plist")
-    private var selectedImages : UIImage? 
+    private var selectedImages : UIImage? {
+        didSet {
+            appendToCollection()
+        }
+    }
     private var newText : String = ""
     
     override func viewDidLoad() {
@@ -46,7 +50,7 @@ class ViewController: UIViewController {
     @IBAction func optionsButtonPressed(_ sender: UIButton) {
         
         let optionsController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "Delete", style: .default)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive)
         let editAction = UIAlertAction(title: "Edit", style: .default)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         optionsController.addAction(editAction)
@@ -75,16 +79,20 @@ class ViewController: UIViewController {
         present(imagePickerController, animated: true)
     }
     
-//    private func appendToCollection() {
-//        // create an ImageObject using the image selected
-//        let imageObject = ImageObject(imageData: resizeImageData, date: Date())
-//        // append(insert) new ImageObject into ImageObjects
-//        imageObjects.insert(imageObject, at: 0)
-//        // create an indexPath for insertion into collectionView
-//        let indexPath = IndexPath(row: 0, section: 0)
-//        // insert new cell in to collectionView
-//        collectionView.insertItems(at: [indexPath])
-//    }
+    private func appendToCollection() {
+        guard let image = selectedImages, let imageData = image.jpegData(compressionQuality: 1.0) else {
+            print("image is nil")
+            return
+        }
+        // create an ImageObject using the image selected
+        let imageObject = ImageObject(imageData: imageData, date: Date(), description: images.first?.description ?? "no caption")
+        // append(insert) new ImageObject into ImageObjects
+        images.insert(imageObject, at: 0)
+        // create an indexPath for insertion into collectionView
+        let indexPath = IndexPath(row: 0, section: 0)
+        // insert new cell in to collectionView
+        collectionView.insertItems(at: [indexPath])
+    }
 }
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
