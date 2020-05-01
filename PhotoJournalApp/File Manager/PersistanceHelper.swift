@@ -38,7 +38,7 @@ class PersistenceHelper {
         }
     }
     
-    public func update(_ oldItem: ImageObject, newItem: ImageObject) -> Bool {
+    public func update(_ oldItem: ImageObject, _ newItem: ImageObject) -> Bool {
     if let index = images.firstIndex(of: oldItem) {
         let result = update(newItem, index)
         return result

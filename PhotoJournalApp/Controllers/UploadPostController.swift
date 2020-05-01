@@ -16,6 +16,7 @@ enum State {
 
 protocol UploadImageDelegate: AnyObject {
     func uploadedPost(_ imageView: ImageObject, _ viewController: UploadPostController)
+    func updateData(_ oldItem: ImageObject, _ newItem: ImageObject)
 }
 
 class UploadPostController: UIViewController {
@@ -26,24 +27,33 @@ class UploadPostController: UIViewController {
     weak var delegate: UploadImageDelegate?
     private var imagePickerController = UIImagePickerController()
     private var imagePersistance = PersistenceHelper(filename: "images.plist")
-    public var images: ImageObject?
+    public var image: ImageObject?
     public var state = State.editing
-    public var selectedImage: UIImage? {
-        didSet {
-            
-        }
-    }
-//    public var postText: String = ""
+    public var selectedImage: UIImage?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         imagePickerController.delegate = self
-        textView.text = "Add text to your Post!"
+        textView.text = image?.description ?? "Add text to your Post!"
+        imageView.image = UIImage(data: image!.imageData)
         textView.textColor = UIColor.lightGray
         textView.delegate = self
         textView.layer.cornerRadius = 7
+    }
+    
+    private func updateState() {
+        
+        guard let imageInto = image else {
+            return
+        }
+        if state == .saving {
+            imageView.image = UIImage(data: imageInto.imageData)
+            textView.text = imageInto.description
+        } else if state == .editing {
+            imageView.image = UIImage(data: imageInto.imageData)
+        }
     }
     
     @IBAction func cameraButtonPressed(_ sender: UIBarButtonItem) {
@@ -73,11 +83,10 @@ class UploadPostController: UIViewController {
             return
         }
         
-        images = ImageObject(imageData: resized, date: Date(), description: textView.text!)
-        delegate?.uploadedPost(images!, self)
+        image = ImageObject(imageData: resized, date: Date(), description: textView.text!)
+        delegate?.uploadedPost(image!, self)
         do {
-            try? imagePersistance.createItem(event: images!)
-            
+            try? imagePersistance.createItem(event: image!)
         } catch {
             print("saving error: \(error)")
         }

@@ -76,7 +76,7 @@ class ViewController: UIViewController {
         guard let addImageVC = storyboard?.instantiateViewController(identifier: "UploadPostController") as? UploadPostController else {
             return
         }
-        addImageVC.delegate = self
+//        addImageVC.delegate = self
         present(addImageVC, animated: true)
     }
     
@@ -153,17 +153,18 @@ extension ViewController: ImageCellDelegate {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "Edit", style: .default) {
             [weak self] (alertAction) in
-            guard let editVC = self?.storyboard?.instantiateViewController(identifier: "UploadPostController") as? UploadPostController, let newItem = editVC.images else {
+            guard let editVC = self?.storyboard?.instantiateViewController(identifier: "UploadPostController") as? UploadPostController else {
                 fatalError("could not instantiate VC")
             }
             let selectedCell = self?.images[indexPath.row]
-            editVC.images = selectedCell
-            if editVC.state == .editing {
-                let index = self?.images.firstIndex{$0.identifier == newItem.identifier}
-                guard let itemIndex = index else {return}
-                let oldItem = self?.images[itemIndex]
-                
-            }
+            editVC.image = selectedCell
+            editVC.state = .editing
+//            if editVC.state == .editing {
+//                let index = self?.images.firstIndex{$0.identifier == newItem.identifier}
+//                guard let itemIndex = index else {return}
+//                let oldItem = self?.images[itemIndex]
+//                self?.updateData(oldItem!, newItem)
+//            }
             self?.present(editVC, animated: true)
         }
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) {
@@ -199,6 +200,12 @@ extension ViewController: ImageCellDelegate {
 }
 
 extension ViewController: UploadImageDelegate {
+    func updateData(_ oldItem: ImageObject, _ newItem: ImageObject) {
+        imagePersistance.update(oldItem, newItem)
+        images[0] = newItem
+        loadImages()
+    }
+    
     func uploadedPost(_ imageView: ImageObject, _ viewController: UploadPostController) {
         self.images.append(imageView)
     }
