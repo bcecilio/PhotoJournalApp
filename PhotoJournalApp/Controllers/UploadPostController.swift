@@ -50,7 +50,7 @@ class UploadPostController: UIViewController {
             return
         }
         if state == .saving {
-            imageView.image = UIImage(data: imageInto.imageData)
+//            imageView.image = UIImage(data: imageInto.imageData)
 //            textView.text = imageInto.description
         } else if state == .editing {
             imageView.image = UIImage(data: imageInto.imageData)
