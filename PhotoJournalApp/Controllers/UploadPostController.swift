@@ -37,10 +37,11 @@ class UploadPostController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         imagePickerController.delegate = self
         textView.text = image?.description ?? "Add text to your Post!"
-        imageView.image = UIImage(data: image!.imageData)
+//        imageView.image = UIImage(data: image!.imageData)
         textView.textColor = UIColor.lightGray
         textView.delegate = self
         textView.layer.cornerRadius = 7
+        updateState()
     }
     
     private func updateState() {
