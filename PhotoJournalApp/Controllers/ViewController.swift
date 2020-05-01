@@ -76,7 +76,7 @@ class ViewController: UIViewController {
         guard let addImageVC = storyboard?.instantiateViewController(identifier: "UploadPostController") as? UploadPostController else {
             return
         }
-//        addImageVC.delegate = self
+        addImageVC.delegate = self
         present(addImageVC, animated: true)
     }
     
@@ -89,19 +89,29 @@ class ViewController: UIViewController {
     }
     
 //    private func appendToCollection() {
-//           guard let image = selectedImages, let imageData = image.jpegData(compressionQuality: 1.0) else {
-//               print("image is nil")
-//               return
-//           }
-//           // create an ImageObject using the image selected
-//           let imageObject = ImageObject(imageData: imageData, date: Date(), description: images.first?.description ?? "no caption")
-//           // append(insert) new ImageObject into ImageObjects
-//           images.insert(imageObject, at: 0)
-//           // create an indexPath for insertion into collectionView
-//           let indexPath = IndexPath(row: 0, section: 0)
-//           // insert new cell in to collectionView
-//           collectionView.insertItems(at: [indexPath])
-//       }
+//        guard let image = selectedImages,
+//          let imageData = image.jpegData(compressionQuality: 1.0) else {
+//            print("image is nil")
+//            return
+//        }
+//        print("Image size is \(image.size)")
+//        let size = UIScreen.main.bounds.size
+//        let rect = AVMakeRect(aspectRatio: image.size, insideRect: CGRect(origin: CGPoint.zero, size: size))
+//        let resizedImage = image.resizeImage(to: rect.size.width, height: rect.size.height)
+//        print("resized image is now \(resizedImage.size)")
+//        guard let resizedImageData = resizedImage.jpegData(compressionQuality: 1.0) else {
+//          return
+//        }
+//        let imageObject = ImageObject(imageData: resizedImageData, date: Date(), description: "")
+//        images.insert(imageObject, at: 0)
+//        let indexPath = IndexPath(row:0, section: 0)
+//        collectionView.insertItems(at: [indexPath])
+//        do{
+//          try? imagePersistance.createItem(event: imageObject)
+//        } catch {
+//          print("saving error \(error)")
+//        }
+//}
 }
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -202,7 +212,7 @@ extension ViewController: ImageCellDelegate {
 extension ViewController: UploadImageDelegate {
     func updateData(_ oldItem: ImageObject, _ newItem: ImageObject) {
         imagePersistance.update(oldItem, newItem)
-        images[0] = newItem
+//        images[0] = newItem
         loadImages()
     }
     

@@ -62,8 +62,13 @@ class PersistenceHelper {
     }
     
     public func createItem(event: ImageObject) throws {
+        print(images.count)
+        do {
+            images = try loadImages()
+        } catch {
+            throw error
+        }
         images.append(event)
-        
         do {
             try save()
         } catch {

@@ -36,7 +36,7 @@ class UploadPostController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         imagePickerController.delegate = self
-        textView.text = image?.description ?? "Add text to your Post!"
+        textView.text = "Add text to your Post!"
 //        imageView.image = UIImage(data: image!.imageData)
         textView.textColor = UIColor.lightGray
         textView.delegate = self
@@ -51,9 +51,10 @@ class UploadPostController: UIViewController {
         }
         if state == .saving {
             imageView.image = UIImage(data: imageInto.imageData)
-            textView.text = imageInto.description
+//            textView.text = imageInto.description
         } else if state == .editing {
             imageView.image = UIImage(data: imageInto.imageData)
+            textView.text = imageInto.description
         }
     }
     
