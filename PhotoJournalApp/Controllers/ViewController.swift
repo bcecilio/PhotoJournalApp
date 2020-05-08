@@ -22,12 +22,7 @@ class ViewController: UIViewController {
     }
     private var imagePickerController = UIImagePickerController()
     private var imagePersistance = PersistenceHelper(filename: "images.plist")
-    private var selectedImages : UIImage? {
-        didSet {
-//            appendToCollection()
-        }
-    }
-//    private var newText : String = ""
+    private var selectedImages : UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,27 +41,6 @@ class ViewController: UIViewController {
             print("loading error: \(error)")
         }
     }
-    
-//    @IBAction func optionsButtonPressed(_ sender: UIButton) {
-//        let optionsController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-//        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) {
-//            [weak self] alertAction in self?.delete(indexPath: IndexPath)
-//        }
-//        let editAction = UIAlertAction(title: "Edit", style: .default)
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-//        optionsController.addAction(editAction)
-//        optionsController.addAction(deleteAction)
-//        optionsController.addAction(cancelAction)
-//        present (optionsController, animated: true)
-//    }
-//    
-//    private func delete(indexPath: IndexPath) {
-//        do {
-//            try imagePersistance.delete(item: indexPath.row)
-//        } catch {
-//            print("no delete")
-//        }
-//    }
     
     @IBAction func addImageToCollection() {
         addImage()
@@ -87,31 +61,6 @@ class ViewController: UIViewController {
         }
         present(imagePickerController, animated: true)
     }
-    
-//    private func appendToCollection() {
-//        guard let image = selectedImages,
-//          let imageData = image.jpegData(compressionQuality: 1.0) else {
-//            print("image is nil")
-//            return
-//        }
-//        print("Image size is \(image.size)")
-//        let size = UIScreen.main.bounds.size
-//        let rect = AVMakeRect(aspectRatio: image.size, insideRect: CGRect(origin: CGPoint.zero, size: size))
-//        let resizedImage = image.resizeImage(to: rect.size.width, height: rect.size.height)
-//        print("resized image is now \(resizedImage.size)")
-//        guard let resizedImageData = resizedImage.jpegData(compressionQuality: 1.0) else {
-//          return
-//        }
-//        let imageObject = ImageObject(imageData: resizedImageData, date: Date(), description: "")
-//        images.insert(imageObject, at: 0)
-//        let indexPath = IndexPath(row:0, section: 0)
-//        collectionView.insertItems(at: [indexPath])
-//        do{
-//          try? imagePersistance.createItem(event: imageObject)
-//        } catch {
-//          print("saving error \(error)")
-//        }
-//}
 }
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -140,7 +89,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        // we nee to access the UIImagePickerController.InfoKey.originalImage key to get the UIImage that was seclected
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
             print("image selection not found")
             return
@@ -159,7 +107,6 @@ extension ViewController: ImageCellDelegate {
         guard let indexPath = collectionView.indexPath(for: imageCell) else {
             return
         }
-        // action: edit, delete, cancel
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "Edit", style: .default) {
             [weak self] (alertAction) in
@@ -188,17 +135,6 @@ extension ViewController: ImageCellDelegate {
     }
     
     private func deleteImageObject(indexPath: IndexPath) {
-        // delete image object from documents directory
-//        imagePersistance.reorderImages(image: images)
-//        do {
-//            images = try imagePersistance.loadImages()
-//        } catch {
-//            print("loading error: \(error)")
-//        }
-//        // delete imageObject from imageObjects
-//        images.remove(at: indexPath.row)
-//        // delete cell from collectionView
-//        collectionView.deleteItems(at: [indexPath])
         
         do {
             try imagePersistance.delete(item: indexPath.row)
@@ -211,9 +147,13 @@ extension ViewController: ImageCellDelegate {
 
 extension ViewController: UploadImageDelegate {
     func updateData(_ oldItem: ImageObject, _ newItem: ImageObject) {
-        imagePersistance.update(oldItem, newItem)
-//        images[0] = newItem
-        loadImages()
+        images.append(newItem)
+//        do {
+//            try? imagePersistance.update(oldItem, newItem)
+//            loadImages()
+//        } catch {
+//            print("image did not update")
+//        }
     }
     
     func uploadedPost(_ imageView: ImageObject, _ viewController: UploadPostController) {

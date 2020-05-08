@@ -28,6 +28,7 @@ class UploadPostController: UIViewController {
     private var imagePickerController = UIImagePickerController()
     private var imagePersistance = PersistenceHelper(filename: "images.plist")
     public var image: ImageObject?
+    public var newPost: ImageObject?
     public var state = State.editing
     public var selectedImage: UIImage?
     
@@ -37,7 +38,6 @@ class UploadPostController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         imagePickerController.delegate = self
         textView.text = "Add text to your Post!"
-//        imageView.image = UIImage(data: image!.imageData)
         textView.textColor = UIColor.lightGray
         textView.delegate = self
         textView.layer.cornerRadius = 7
@@ -50,8 +50,8 @@ class UploadPostController: UIViewController {
             return
         }
         if state == .saving {
-//            imageView.image = UIImage(data: imageInto.imageData)
-//            textView.text = imageInto.description
+            //            imageView.image = UIImage(data: imageInto.imageData)
+            //            textView.text = imageInto.description
         } else if state == .editing {
             imageView.image = UIImage(data: imageInto.imageData)
             textView.text = imageInto.description
@@ -74,7 +74,6 @@ class UploadPostController: UIViewController {
         guard let photo = imageView.image else {
             return
         }
-        
         let size = UIScreen.main.bounds.size
         
         let rect = AVMakeRect(aspectRatio: photo.size, insideRect: CGRect(origin: CGPoint.zero, size: size))
@@ -86,11 +85,21 @@ class UploadPostController: UIViewController {
         }
         
         image = ImageObject(imageData: resized, date: Date(), description: textView.text!)
+        
         delegate?.uploadedPost(image!, self)
-        do {
-            try? imagePersistance.createItem(event: image!)
-        } catch {
-            print("saving error: \(error)")
+        if state == .saving {
+            do {
+                try? imagePersistance.createItem(event: image!)
+            } catch {
+                print("saving error: \(error)")
+            }
+        } else if state == .editing {
+            do {
+                newPost = ImageObject(imageData: resized, date: Date(), description: textView.text!)
+                _ = imagePersistance.update(image!, newPost!)
+            } catch {
+                print("error updating")
+            }
         }
         dismiss(animated: true)
     }
@@ -117,20 +126,18 @@ extension UploadPostController: UIImagePickerControllerDelegate, UINavigationCon
 
 extension UploadPostController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-
-        // Combine the textView text and the replacement text to
-        // create the updated text string
+        
         let currentText:String = textView.text
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
         if updatedText.isEmpty {
-
+            
             textView.text = "Add text to your Post!"
             textView.textColor = UIColor.lightGray
-
+            
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
         }
-         else if textView.textColor == UIColor.lightGray && !text.isEmpty {
+        else if textView.textColor == UIColor.lightGray && !text.isEmpty {
             textView.textColor = UIColor.black
             textView.text = text
         }
