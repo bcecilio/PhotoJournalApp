@@ -147,13 +147,7 @@ extension ViewController: ImageCellDelegate {
 
 extension ViewController: UploadImageDelegate {
     func updateData(_ oldItem: ImageObject, _ newItem: ImageObject) {
-        images.append(newItem)
-//        do {
-//            try? imagePersistance.update(oldItem, newItem)
-//            loadImages()
-//        } catch {
-//            print("image did not update")
-//        }
+        self.images.append(newItem)
     }
     
     func uploadedPost(_ imageView: ImageObject, _ viewController: UploadPostController) {

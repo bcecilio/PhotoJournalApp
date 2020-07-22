@@ -85,10 +85,9 @@ class UploadPostController: UIViewController {
         }
         
         image = ImageObject(imageData: resized, date: Date(), description: textView.text!)
-        
-        delegate?.uploadedPost(image!, self)
         if state == .saving {
             do {
+                delegate?.uploadedPost(image!, self)
                 try? imagePersistance.createItem(event: image!)
             } catch {
                 print("saving error: \(error)")
@@ -96,7 +95,8 @@ class UploadPostController: UIViewController {
         } else if state == .editing {
             do {
                 newPost = ImageObject(imageData: resized, date: Date(), description: textView.text!)
-                _ = imagePersistance.update(image!, newPost!)
+                delegate?.updateData(image!, newPost!)
+                try? imagePersistance.update(image!, newPost!)
             } catch {
                 print("error updating")
             }
